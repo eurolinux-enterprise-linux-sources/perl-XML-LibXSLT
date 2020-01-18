@@ -1,11 +1,12 @@
 Name:		perl-XML-LibXSLT
 # NOTE: also update perl-XML-LibXML to a compatible version.  See below why.
 Version:	1.80
-Release:	1%{?dist}
+Release:	4%{?dist}
 Summary:	Perl module for interfacing to GNOME's libxslt
 Group:		Development/Libraries
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/XML-LibXSLT/
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Source0:	http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/XML-LibXSLT-%{version}.tar.gz
 BuildRequires:	perl(Carp)
 BuildRequires:	perl(DynaLoader)
@@ -48,13 +49,26 @@ chmod -R u+w %{buildroot}/*
 %check
 make test
 
+%clean
+rm -rf %{buildroot}
+
 %files
+%defattr(-,root,root,-)
 %doc Changes README benchmark example
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/XML
 %{_mandir}/man3/*.3*
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.80-4
+- Mass rebuild 2014-01-24
+
+* Fri Jan 10 2014 Jeff Fearn <jfearn@redhat.com> - 1.80-3
+- Fix spec errors. BZ #1043619
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.80-2
+- Mass rebuild 2013-12-27
+
 * Thu Jan 24 2013 Petr Šabata <contyk@redhat.com> - 1.80-1
 - 1.80 bump
 
@@ -181,18 +195,18 @@ make test
 - new upstream
 - use dist macro
 
-* Fri Apr  7 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
+* Fri Apr 08 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
 - rebuilt
 
-* Sat Mar  5 2005 Ville Skyttä <ville.skytta at iki.fi> - 1.57-3
+* Sat Mar 05 2005 Ville Skyttä <ville.skytta at iki.fi> - 1.57-3
 - Drop pre-FC2 LD_RUN_PATH hack.
 - Install benchmark.pl only as %%doc.
 
-* Fri Feb 26 2005 Zing <shishz@hotpop.com> - 1.57-2
+* Fri Feb 25 2005 Zing <shishz@hotpop.com> - 1.57-2
 - QA from Ville Skyttä
--	BuildRequires XML::LibXML >= 1.57
--	BuildRequires libxslt-devel
--	put benchmark.pl in %%doc
+- BuildRequires XML::LibXML >= 1.57
+- BuildRequires libxslt-devel
+- put benchmark.pl in %%doc
 
 * Fri Feb 25 2005 Zing <shishz@hotpop.com> - 1.57-1
 - First build.
